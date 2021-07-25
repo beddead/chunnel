@@ -1,19 +1,17 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
 
-namespace chunnel
+namespace Chunnel
 {
-  class Program
+  internal class Program
   {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
       Setup();
       var logger = _loggerFactory.CreateLogger<Program>();
       logger.LogInformation("Hello World!");
       using (logger.BeginScope("[msg from scope]"))
-      {
         logger.LogInformation("Each log message is fit in a single line.");
-      }
       Console.ReadLine();
     }
 

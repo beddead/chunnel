@@ -58,7 +58,7 @@ csharp_style_var_when_type_is_apparent=true:suggestion
 csharp_style_var_elsewhere=true:suggestion
 
 # Prefer expression-bodied members for constructors
-csharp_style_expression_bodied_constructors=true:none
+csharp_style_expression_bodied_constructors=false:none
 
 # prefer expression-bodied members for methods
 csharp_style_expression_bodied_methods=false:none

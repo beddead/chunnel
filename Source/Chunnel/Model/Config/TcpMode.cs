@@ -1,4 +1,4 @@
-﻿namespace chunnel.Model.Config
+﻿namespace Chunnel.Model.Config
 {
   /// <summary>
   /// TCP connection mode

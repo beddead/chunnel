@@ -5,13 +5,13 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace chunnel.Model.Config
+namespace Chunnel.Model.Config
 {
   internal class TcpConnectionPoint : ConnectionPoint
   {
-    public IPAddress Address { get; }
+    public string Address { get; }
 
-    public TcpConnectionPoint(IPAddress address, int port, TcpMode mode)
+    public TcpConnectionPoint(string address, int port, TcpMode mode)
     {
       Address = address ?? throw new ArgumentNullException(nameof(address));
       Port = port;

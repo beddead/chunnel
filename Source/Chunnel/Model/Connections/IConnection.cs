@@ -6,14 +6,12 @@ using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
-namespace Chunnel.Model
+namespace Chunnel.Model.Connections
 {
   internal interface IConnection
   {
-    Task OpenAsync();
+    Task RunAsync(Channel<ReadOnlyMemory<byte>> channel, CancellationToken cancellation);
 
-    Task CloseAsync();
-
-    Channel<ReadOnlyMemory<byte>> Channel { get; }
+    string Name { get; }
   }
 }

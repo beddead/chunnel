@@ -1,4 +1,4 @@
-﻿namespace chunnel.Model.Config
+﻿namespace Chunnel.Model.Config
 {
   internal class TunnelConfig
   {
