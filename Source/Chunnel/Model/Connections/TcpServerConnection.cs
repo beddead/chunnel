@@ -1,37 +1,60 @@
 ﻿using System;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Chunnel.Model.Config;
 using Microsoft.Extensions.Logging;
+using LocStrings = Chunnel.Properties.Resources;
 
 namespace Chunnel.Model.Connections
 {
-  internal class TcpServerConnection : IConnection
+  internal class TcpServerConnection : TcpConnectionBase, IConnection
   {
-    public TcpServerConnection(TcpConnectionPoint connectionPoint, string name, ILogger logger)
+    public TcpServerConnection(TcpConnectionPoint connectionPoint, string name, ILogger logger) :
+      base(connectionPoint, name, logger)
     {
-      _connectionPoint = connectionPoint ?? throw new ArgumentNullException(nameof(connectionPoint));
-      _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-      Name = name ?? throw new ArgumentNullException(nameof(name));
     }
 
-    public Task RunAsync(Channel<ReadOnlyMemory<byte>> channel, CancellationToken cancellation)
+    public async Task RunAsync(ChannelReader<ReadOnlyMemory<byte>> reader,
+      ChannelWriter<ReadOnlyMemory<byte>> writer, CancellationToken cancellation)
     {
-      throw new NotImplementedException();
-    }
+      var endPoint = Setup(reader, writer);
 
-    public Channel<ReadOnlyMemory<byte>> Channel
-    {
-      get
+      cancellation.ThrowIfCancellationRequested();
+
+      try
       {
-        throw new NotImplementedException();
+        _logger.LogTrace(string.Format(LocStrings.Listening, Name));
+        _socket.Bind(endPoint);
+        _socket.Listen(100);
+
+        while (!cancellation.IsCancellationRequested)
+        {
+          try
+          {
+            var socket = await _socket.AcceptAsync();
+            _ = RunTunnelLoop(socket, cancellation);
+          }
+          catch (TaskCanceledException)
+          {
+            return;
+          }
+          catch (AggregateException e) when (e.InnerException is TaskCanceledException)
+          {
+            return;
+          }
+          catch (Exception e)
+          {
+            _logger.LogError(e, LocStrings.ConnectionLoopError);
+            await Task.Delay(TimeSpan.FromSeconds(5), cancellation);
+          }
+        }
+      }
+      finally
+      {
+        await CloseAsync(_socket);
       }
     }
-
-    public string Name { get; }
-
-    private readonly TcpConnectionPoint _connectionPoint;
-    private readonly ILogger _logger;
   }
 }

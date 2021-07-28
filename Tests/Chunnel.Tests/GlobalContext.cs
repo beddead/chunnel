@@ -16,6 +16,7 @@ namespace Chunnel.Tests
     {
       LoggerFactory = Microsoft.Extensions.Logging.LoggerFactory.Create(builder =>
       {
+        builder.SetMinimumLevel(LogLevel.Trace);
         builder.AddDebug();
       });
     }

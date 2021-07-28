@@ -123,10 +123,16 @@
   <data name="ConnectionLoopError" xml:space="preserve">
     <value>Connection loop error</value>
   </data>
+  <data name="Listening" xml:space="preserve">
+    <value>Listening '{0}'</value>
+  </data>
   <data name="RecievedBytesFromConnection" xml:space="preserve">
     <value>Recieved from connection '{0}' {1} bytes: {2}</value>
   </data>
+  <data name="SendingBytesToConnection" xml:space="preserve">
+    <value>Sending to connection '{0}' {1} bytes: {2}</value>
+  </data>
   <data name="StartingWorkLoop" xml:space="preserve">
-    <value>'{0}' stating work loop...</value>
+    <value>'{0}' starting work loop for {1} &lt;-&gt; {2}...</value>
   </data>
 </root>

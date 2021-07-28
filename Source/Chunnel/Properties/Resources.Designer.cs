@@ -79,6 +79,15 @@ namespace Chunnel.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Listening &apos;{0}&apos;.
+        /// </summary>
+        internal static string Listening {
+            get {
+                return ResourceManager.GetString("Listening", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recieved from connection &apos;{0}&apos; {1} bytes: {2}.
         /// </summary>
         internal static string RecievedBytesFromConnection {
@@ -88,7 +97,16 @@ namespace Chunnel.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos; stating work loop....
+        ///   Looks up a localized string similar to Sending to connection &apos;{0}&apos; {1} bytes: {2}.
+        /// </summary>
+        internal static string SendingBytesToConnection {
+            get {
+                return ResourceManager.GetString("SendingBytesToConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; starting work loop for {1} &lt;-&gt; {2}....
         /// </summary>
         internal static string StartingWorkLoop {
             get {

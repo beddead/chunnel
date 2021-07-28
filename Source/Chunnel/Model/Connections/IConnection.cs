@@ -10,8 +10,19 @@ namespace Chunnel.Model.Connections
 {
   internal interface IConnection
   {
-    Task RunAsync(Channel<ReadOnlyMemory<byte>> channel, CancellationToken cancellation);
+    /// <summary>
+    /// Run connection processing loop
+    /// </summary>
+    /// <param name="reader">Reader from connection will read messages and send it to connection end point</param>
+    /// <param name="writer">Writer connection will write recieved message from connection end point</param>
+    /// <param name="cancellation"></param>
+    /// <returns></returns>
+    Task RunAsync(ChannelReader<ReadOnlyMemory<byte>> reader,
+      ChannelWriter<ReadOnlyMemory<byte>> writer, CancellationToken cancellation);
 
+    /// <summary>
+    /// Connection name
+    /// </summary>
     string Name { get; }
   }
 }
