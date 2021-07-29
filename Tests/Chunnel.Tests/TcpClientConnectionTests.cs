@@ -27,14 +27,19 @@ namespace Chunnel.Tests
 
       var serverChannel = Channel.CreateUnbounded<ReadOnlyMemory<byte>>();
       var clientChannel = Channel.CreateUnbounded<ReadOnlyMemory<byte>>();
-      var cancellation = new CancellationTokenSource();
+      var outChannel = Channel.CreateUnbounded<ReadOnlyMemory<byte>>();
+      var cancellation = new CancellationTokenSource(5000);
 
       var serverTask = serverConnection.RunAsync(serverChannel.Reader, clientChannel.Writer, cancellation.Token);
-      var clientTask = clientConnection.RunAsync(clientChannel.Reader, serverChannel.Writer, cancellation.Token);
+      var clientTask = clientConnection.RunAsync(clientChannel.Reader, outChannel.Writer, cancellation.Token);
 
       await WriteStringAsync("writen to server channel", serverChannel.Writer, cancellation.Token);
-      await Task.Delay(15000);
-      var msg = clientChannel.Reader.ReadAsync(cancellation.Token);
+      var hasData = await outChannel.Reader.WaitToReadAsync(cancellation.Token);
+      Assert.IsTrue(hasData);
+      var msg = await outChannel.Reader.ReadAsync(cancellation.Token);
+      cancellation.Cancel();
+      Assert.AreEqual(24, msg.Length);
+      Assert.AreEqual("writen to server channel", Encoding.UTF8.GetString(msg.Span));
     }
 
     [Test]

@@ -88,7 +88,7 @@ namespace Chunnel.Model.Connections
 
     protected ValueTask WriteToChannelAsync(Memory<byte> buffer, int readed, CancellationToken cancellation)
     {
-      var outBuffer = new Memory<byte>(buffer.ToArray());
+      var outBuffer = new Memory<byte>(buffer.Slice(0, readed).ToArray());
       return _writer.WriteAsync(outBuffer, cancellation);
     }
 
