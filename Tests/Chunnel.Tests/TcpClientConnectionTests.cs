@@ -42,24 +42,6 @@ namespace Chunnel.Tests
       Assert.AreEqual("writen to server channel", Encoding.UTF8.GetString(msg.Span));
     }
 
-    [Test]
-    public async Task WriteToEndPointTest()
-    {
-      var endPoint = new TcpConnectionPoint("opo-tfs.zav.mir", 443, TcpMode.Client);
-      var connection = new TcpClientConnection(endPoint, "http",
-        GlobalContext.LoggerFactory.CreateLogger<TcpClientConnection>());
-
-      var left = Channel.CreateUnbounded<ReadOnlyMemory<byte>>();
-      var right = Channel.CreateUnbounded<ReadOnlyMemory<byte>>();
-      var cancellation = new CancellationTokenSource();
-
-      var task = connection.RunAsync(left.Reader, right.Writer, cancellation.Token);
-
-      await WriteStringAsync("get", left.Writer, cancellation.Token);
-      await Task.Delay(15000);
-      var answer = right.Reader.ReadAsync();
-    }
-
     private static ValueTask WriteStringAsync(string msg, ChannelWriter<ReadOnlyMemory<byte>> writer, CancellationToken cancellation)
     {
       var buffer = Encoding.UTF8.GetBytes(msg);
