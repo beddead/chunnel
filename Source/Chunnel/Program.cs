@@ -41,10 +41,11 @@ namespace Chunnel
     {
       _loggerFactory = LoggerFactory.Create(builder =>
       {
+        builder.SetMinimumLevel(LogLevel.Trace);
         builder.AddSimpleConsole(options =>
         {
           options.IncludeScopes = true;
-          options.SingleLine = true;
+          options.SingleLine = false;
           options.TimestampFormat = "hh:mm:ss ";
         });
       });

@@ -30,7 +30,8 @@ namespace Chunnel.Model.Connections
           try
           {
             _logger.LogTrace(string.Format(LocStrings.Connecting, Name));
-            await _socket.ConnectAsync(endPoint, cancellation).ConfigureAwait(false);
+            if (!_socket.Connected)
+              await _socket.ConnectAsync(endPoint, cancellation).ConfigureAwait(false);
 
             await RunTunnelLoop(_socket, cancellation);
           }
@@ -45,6 +46,15 @@ namespace Chunnel.Model.Connections
           catch (Exception e)
           {
             _logger.LogError(e, LocStrings.ConnectionLoopError);
+
+            try
+            {
+              _socket.Disconnect(true);
+            }
+            catch (Exception ex)
+            {
+              _logger.LogError(ex.Message);
+            }
           }
 
           await Task.Delay(TimeSpan.FromSeconds(5), cancellation);
