@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\source\chunnel\Chunnel.csproj" />
+    <ProjectReference Include="..\..\Source\Chunnel\Chunnel.csproj" />
   </ItemGroup>
 
 </Project>
