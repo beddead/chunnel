@@ -35,6 +35,7 @@ namespace Chunnel.Model
       CreateBuffers(out var leftBuffer, out var rightBuffer);
       try
       {
+        leftConnection.LogData = true;
         var left = leftConnection.RunAsync(leftBuffer.Reader, rightBuffer.Writer, cancellation);
         var right = rightConnection.RunAsync(rightBuffer.Reader, leftBuffer.Writer, cancellation);
         await Task.WhenAny(left, right);
@@ -55,8 +56,7 @@ namespace Chunnel.Model
       {
         var factory = new ConnectionFactory(_loggerFactory);
         leftConnection = factory.Create(config.Left, "Left");
-        rightConnection = factory.Create(config.Right, "right");
-
+        rightConnection = factory.Create(config.Right, "Right");
       }
       catch (Exception e)
       {
@@ -67,8 +67,11 @@ namespace Chunnel.Model
 
     private static void CreateBuffers(out Channel<ReadOnlyMemory<byte>> leftBuffer, out Channel<ReadOnlyMemory<byte>> rightBuffer)
     {
-      leftBuffer = Channel.CreateUnbounded<ReadOnlyMemory<byte>>();
-      rightBuffer = Channel.CreateUnbounded<ReadOnlyMemory<byte>>();
+      var options = new BoundedChannelOptions(1);
+      options.FullMode = BoundedChannelFullMode.DropOldest;
+
+      leftBuffer = Channel.CreateBounded<ReadOnlyMemory<byte>>(options);
+      rightBuffer = Channel.CreateBounded<ReadOnlyMemory<byte>>(options);
     }
 
     private TunnelConfig CreateConfig()

@@ -24,5 +24,10 @@ namespace Chunnel.Model.Connections
     /// Connection name
     /// </summary>
     string Name { get; }
+
+    /// <summary>
+    /// Log recieved and sended messages
+    /// </summary>
+    bool LogData { get; set; }
   }
 }

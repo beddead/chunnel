@@ -12,7 +12,7 @@ using LocStrings = Chunnel.Properties.Resources;
 
 namespace Chunnel.Model.Connections
 {
-  internal class TcpConnectionBase
+  internal abstract class TcpConnectionBase : IConnection
   {
     static TcpConnectionBase()
     {
@@ -27,7 +27,11 @@ namespace Chunnel.Model.Connections
       _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
+    public abstract Task RunAsync(ChannelReader<ReadOnlyMemory<byte>> reader, ChannelWriter<ReadOnlyMemory<byte>> writer, CancellationToken cancellation);
+
     public string Name { get; }
+
+    public bool LogData { get; set; }
 
     protected IPEndPoint Setup(ChannelReader<ReadOnlyMemory<byte>> reader, ChannelWriter<ReadOnlyMemory<byte>> writer)
     {
@@ -70,8 +74,11 @@ namespace Chunnel.Model.Connections
         var readed = await socket.ReceiveAsync(buffer, SocketFlags.None, cancellation).ConfigureAwait(false);
         if (readed != 0)
         {
-          _logger.LogTrace(string.Format(LocStrings.RecievedBytesFromConnection, Name, readed,
-            BufferToString(buffer, readed)));
+          if (LogData)
+          {
+            _logger.LogTrace(string.Format(LocStrings.RecievedBytesFromConnection, Name, readed,
+              BufferToString(buffer, readed)));
+          }
           await WriteToChannelAsync(buffer, readed, cancellation);
         }
       }
@@ -84,8 +91,11 @@ namespace Chunnel.Model.Connections
         if (cancellation.IsCancellationRequested)
           return;
 
-        _logger.LogTrace(string.Format(LocStrings.SendingBytesToConnection, Name, msg.Length,
-          BufferToString(msg, msg.Length)));
+        if (LogData)
+        {
+          _logger.LogTrace(string.Format(LocStrings.SendingBytesToConnection, Name, msg.Length,
+            BufferToString(msg, msg.Length)));
+        }
         await socket.SendAsync(msg, SocketFlags.None, cancellation).ConfigureAwait(false);
       }
     }

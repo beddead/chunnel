@@ -9,14 +9,14 @@ using LocStrings = Chunnel.Properties.Resources;
 
 namespace Chunnel.Model.Connections
 {
-  internal class TcpServerConnection : TcpConnectionBase, IConnection
+  internal class TcpServerConnection : TcpConnectionBase
   {
     public TcpServerConnection(TcpConnectionPoint connectionPoint, string name, ILogger logger) :
       base(connectionPoint, name, logger)
     {
     }
 
-    public async Task RunAsync(ChannelReader<ReadOnlyMemory<byte>> reader,
+    public override async Task RunAsync(ChannelReader<ReadOnlyMemory<byte>> reader,
       ChannelWriter<ReadOnlyMemory<byte>> writer, CancellationToken cancellation)
     {
       var endPoint = Setup(reader, writer);
