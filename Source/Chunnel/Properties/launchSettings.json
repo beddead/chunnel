@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Chunnel": {
+      "commandName": "Project",
+      "commandLineArgs": "--left_type client --left_address 172.22.91.201 --left_port 1001 --right_type server"
+    }
+  }
+}

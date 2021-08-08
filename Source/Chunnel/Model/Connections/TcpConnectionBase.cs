@@ -34,8 +34,12 @@ namespace Chunnel.Model.Connections
       _reader = reader ?? throw new ArgumentNullException(nameof(reader));
       _writer = writer ?? throw new ArgumentNullException(nameof(writer));
 
-      var hostEntry = Dns.GetHostEntry(_connectionPoint.Address);
-      var endPoint = new IPEndPoint(hostEntry.AddressList[0], _connectionPoint.Port);
+      if (!IPAddress.TryParse(_connectionPoint.Address, out var ipAddress))
+      {
+        var hostEntry = Dns.GetHostEntry(_connectionPoint.Address);
+        ipAddress = hostEntry.AddressList[0];
+      }
+      var endPoint = new IPEndPoint(ipAddress, _connectionPoint.Port);
 
       _socket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
       {

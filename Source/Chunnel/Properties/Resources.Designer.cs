@@ -22,7 +22,7 @@ namespace Chunnel.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Chunnel.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Chunnel.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Chunnel.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Chunnel.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Connecting &apos;{0}&apos;.
         /// </summary>
-        internal static string Connecting {
+        public static string Connecting {
             get {
                 return ResourceManager.GetString("Connecting", resourceCulture);
             }
@@ -72,16 +72,124 @@ namespace Chunnel.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Connection loop error.
         /// </summary>
-        internal static string ConnectionLoopError {
+        public static string ConnectionLoopError {
             get {
                 return ResourceManager.GetString("ConnectionLoopError", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Creating connections....
+        /// </summary>
+        public static string CreatingConnections {
+            get {
+                return ResourceManager.GetString("CreatingConnections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating connections config.
+        /// </summary>
+        public static string CreatingConnectionsConfig {
+            get {
+                return ResourceManager.GetString("CreatingConnectionsConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating connections config failed.
+        /// </summary>
+        public static string CreatingConnectionsConfigFailed {
+            get {
+                return ResourceManager.GetString("CreatingConnectionsConfigFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creating connections failed.
+        /// </summary>
+        public static string CreatingConnectionsFailed {
+            get {
+                return ResourceManager.GetString("CreatingConnectionsFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP address or host name for left connection end point.
+        /// </summary>
+        public static string HelpTextLeftAddress {
+            get {
+                return ResourceManager.GetString("HelpTextLeftAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TCP port for left connection end point.
+        /// </summary>
+        public static string HelpTextLeftPort {
+            get {
+                return ResourceManager.GetString("HelpTextLeftPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left connection end point type. Possible values: client, server.
+        /// </summary>
+        public static string HelpTextLeftType {
+            get {
+                return ResourceManager.GetString("HelpTextLeftType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP address or host name for right connection end point.
+        /// </summary>
+        public static string HelpTextRightAddress {
+            get {
+                return ResourceManager.GetString("HelpTextRightAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TCP port for right connection end point.
+        /// </summary>
+        public static string HelpTextRightPort {
+            get {
+                return ResourceManager.GetString("HelpTextRightPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right connection end point type. Possible values: client, server.
+        /// </summary>
+        public static string HelpTextRightType {
+            get {
+                return ResourceManager.GetString("HelpTextRightType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP address or host name.
+        /// </summary>
+        public static string IPAddressOrHostName {
+            get {
+                return ResourceManager.GetString("IPAddressOrHostName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left connection config.
+        /// </summary>
+        public static string LeftConnectionConfig {
+            get {
+                return ResourceManager.GetString("LeftConnectionConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Listening &apos;{0}&apos;.
         /// </summary>
-        internal static string Listening {
+        public static string Listening {
             get {
                 return ResourceManager.GetString("Listening", resourceCulture);
             }
@@ -90,27 +198,81 @@ namespace Chunnel.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Recieved from connection &apos;{0}&apos; {1} bytes: {2}.
         /// </summary>
-        internal static string RecievedBytesFromConnection {
+        public static string RecievedBytesFromConnection {
             get {
                 return ResourceManager.GetString("RecievedBytesFromConnection", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Right connection config.
+        /// </summary>
+        public static string RightConnectionConfig {
+            get {
+                return ResourceManager.GetString("RightConnectionConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sending to connection &apos;{0}&apos; {1} bytes: {2}.
         /// </summary>
-        internal static string SendingBytesToConnection {
+        public static string SendingBytesToConnection {
             get {
                 return ResourceManager.GetString("SendingBytesToConnection", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Starting connections and working loop....
+        /// </summary>
+        public static string StartingConnectionsAndWorkingLoop {
+            get {
+                return ResourceManager.GetString("StartingConnectionsAndWorkingLoop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; starting work loop for {1} &lt;-&gt; {2}....
         /// </summary>
-        internal static string StartingWorkLoop {
+        public static string StartingWorkLoop {
             get {
                 return ResourceManager.GetString("StartingWorkLoop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TCP connection mode.
+        /// </summary>
+        public static string TcpConnectionMode {
+            get {
+                return ResourceManager.GetString("TcpConnectionMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TCP port.
+        /// </summary>
+        public static string TcpPort {
+            get {
+                return ResourceManager.GetString("TcpPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unsupported connection end point type &apos;{0}&apos;.
+        /// </summary>
+        public static string UnsupportedEndPointType {
+            get {
+                return ResourceManager.GetString("UnsupportedEndPointType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fail in working loop.
+        /// </summary>
+        public static string WorkingLoopFail {
+            get {
+                return ResourceManager.GetString("WorkingLoopFail", resourceCulture);
             }
         }
     }

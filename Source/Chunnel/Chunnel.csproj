@@ -7,7 +7,7 @@
     <Authors>Slava Antonov</Authors>
     <Product>chunnel</Product>
     <Description>Communication channels proxy utility</Description>
-    <Copyright>Slava Antonov © 2021</Copyright>
+    <Copyright>Slava Antonov (C) 2021</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="5.0.8" />
   </ItemGroup>
@@ -31,7 +32,7 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

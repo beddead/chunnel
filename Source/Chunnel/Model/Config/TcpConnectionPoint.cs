@@ -9,14 +9,21 @@ namespace Chunnel.Model.Config
 {
   internal class TcpConnectionPoint : ConnectionPoint
   {
-    public string Address { get; }
-
     public TcpConnectionPoint(string address, int port, TcpMode mode)
     {
       Address = address ?? throw new ArgumentNullException(nameof(address));
       Port = port;
       Mode = mode;
     }
+
+    public override string ToString()
+    {
+      return Properties.Resources.IPAddressOrHostName + ": " + Address + "\r\n" +
+        Properties.Resources.TcpPort + ": " + Port.ToString() + "\r\n" +
+        Properties.Resources.TcpConnectionMode + ": " + Mode.ToString();
+    }
+
+    public string Address { get; }
 
     public int Port { get; }
 

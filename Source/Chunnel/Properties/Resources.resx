@@ -123,16 +123,71 @@
   <data name="ConnectionLoopError" xml:space="preserve">
     <value>Connection loop error</value>
   </data>
+  <data name="CreatingConnections" xml:space="preserve">
+    <value>Creating connections...</value>
+  </data>
+  <data name="CreatingConnectionsConfig" xml:space="preserve">
+    <value>Creating connections config</value>
+  </data>
+  <data name="CreatingConnectionsConfigFailed" xml:space="preserve">
+    <value>Creating connections config failed</value>
+    <comment> </comment>
+  </data>
+  <data name="CreatingConnectionsFailed" xml:space="preserve">
+    <value>Creating connections failed</value>
+  </data>
+  <data name="HelpTextLeftAddress" xml:space="preserve">
+    <value>IP address or host name for left connection end point</value>
+  </data>
+  <data name="HelpTextLeftPort" xml:space="preserve">
+    <value>TCP port for left connection end point</value>
+  </data>
+  <data name="HelpTextLeftType" xml:space="preserve">
+    <value>Left connection end point type. Possible values: client, server</value>
+  </data>
+  <data name="HelpTextRightAddress" xml:space="preserve">
+    <value>IP address or host name for right connection end point</value>
+  </data>
+  <data name="HelpTextRightPort" xml:space="preserve">
+    <value>TCP port for right connection end point</value>
+  </data>
+  <data name="HelpTextRightType" xml:space="preserve">
+    <value>Right connection end point type. Possible values: client, server</value>
+  </data>
+  <data name="IPAddressOrHostName" xml:space="preserve">
+    <value>IP address or host name</value>
+  </data>
+  <data name="LeftConnectionConfig" xml:space="preserve">
+    <value>Left connection config</value>
+  </data>
   <data name="Listening" xml:space="preserve">
     <value>Listening '{0}'</value>
   </data>
   <data name="RecievedBytesFromConnection" xml:space="preserve">
     <value>Recieved from connection '{0}' {1} bytes: {2}</value>
   </data>
+  <data name="RightConnectionConfig" xml:space="preserve">
+    <value>Right connection config</value>
+  </data>
   <data name="SendingBytesToConnection" xml:space="preserve">
     <value>Sending to connection '{0}' {1} bytes: {2}</value>
   </data>
+  <data name="StartingConnectionsAndWorkingLoop" xml:space="preserve">
+    <value>Starting connections and working loop...</value>
+  </data>
   <data name="StartingWorkLoop" xml:space="preserve">
     <value>'{0}' starting work loop for {1} &lt;-&gt; {2}...</value>
+  </data>
+  <data name="TcpConnectionMode" xml:space="preserve">
+    <value>TCP connection mode</value>
+  </data>
+  <data name="TcpPort" xml:space="preserve">
+    <value>TCP port</value>
+  </data>
+  <data name="UnsupportedEndPointType" xml:space="preserve">
+    <value>Unsupported connection end point type '{0}'</value>
+  </data>
+  <data name="WorkingLoopFail" xml:space="preserve">
+    <value>Fail in working loop</value>
   </data>
 </root>
