@@ -33,11 +33,8 @@ namespace Chunnel.Model.Connections
 
     public bool LogData { get; set; }
 
-    protected IPEndPoint Setup(ChannelReader<ReadOnlyMemory<byte>> reader, ChannelWriter<ReadOnlyMemory<byte>> writer)
+    protected IPEndPoint Setup()
     {
-      _reader = reader ?? throw new ArgumentNullException(nameof(reader));
-      _writer = writer ?? throw new ArgumentNullException(nameof(writer));
-
       if (!IPAddress.TryParse(_connectionPoint.Address, out var ipAddress))
       {
         var hostEntry = Dns.GetHostEntry(_connectionPoint.Address);
@@ -56,16 +53,22 @@ namespace Chunnel.Model.Connections
       return endPoint;
     }
 
-    protected async Task RunTunnelLoop(Socket socket, CancellationToken cancellation)
+    protected async Task RunTunnelLoop(Socket socket, ChannelReader<ReadOnlyMemory<byte>> reader,
+      ChannelWriter<ReadOnlyMemory<byte>> writer, CancellationToken cancellation)
     {
-      _logger.LogTrace(string.Format(LocStrings.StartingWorkLoop, Name, socket.LocalEndPoint, 
+      if (reader is null) 
+        throw new ArgumentNullException(nameof(reader));
+      if (writer is null) 
+        throw new ArgumentNullException(nameof(writer));
+
+      _logger.LogTrace(string.Format(LocStrings.StartingWorkLoop, Name, socket.LocalEndPoint,
         socket.RemoteEndPoint));
-      var readLoop = ReadLoopAsync(socket, cancellation);
-      var writeLoop = WriteLoopAsync(socket, cancellation);
+      var readLoop = ReadLoopAsync(socket, writer, cancellation);
+      var writeLoop = WriteLoopAsync(socket, reader, cancellation);
       await Task.WhenAll(readLoop, writeLoop);
     }
 
-    protected async Task ReadLoopAsync(Socket socket, CancellationToken cancellation)
+    protected async Task ReadLoopAsync(Socket socket, ChannelWriter<ReadOnlyMemory<byte>> writer, CancellationToken cancellation)
     {
       var buffer = new Memory<byte>(_readBuffer);
 
@@ -79,14 +82,14 @@ namespace Chunnel.Model.Connections
             _logger.LogTrace(string.Format(LocStrings.RecievedBytesFromConnection, Name, readed,
               BufferToString(buffer, readed)));
           }
-          await WriteToChannelAsync(buffer, readed, cancellation);
+          await WriteToChannelAsync(buffer, readed, writer, cancellation);
         }
       }
     }
 
-    protected async Task WriteLoopAsync(Socket socket, CancellationToken cancellation)
+    protected async Task WriteLoopAsync(Socket socket, ChannelReader<ReadOnlyMemory<byte>> reader, CancellationToken cancellation)
     {
-      await foreach (var msg in _reader.ReadAllAsync(cancellation))
+      await foreach (var msg in reader.ReadAllAsync(cancellation))
       {
         if (cancellation.IsCancellationRequested)
           return;
@@ -100,10 +103,10 @@ namespace Chunnel.Model.Connections
       }
     }
 
-    protected ValueTask WriteToChannelAsync(Memory<byte> buffer, int readed, CancellationToken cancellation)
+    protected ValueTask WriteToChannelAsync(Memory<byte> buffer, int readed, ChannelWriter<ReadOnlyMemory<byte>> writer, CancellationToken cancellation)
     {
       var outBuffer = new Memory<byte>(buffer.Slice(0, readed).ToArray());
-      return _writer.WriteAsync(outBuffer, cancellation);
+      return writer.WriteAsync(outBuffer, cancellation);
     }
 
     protected static Task CloseAsync(Socket socket)
@@ -138,8 +141,6 @@ namespace Chunnel.Model.Connections
     protected byte[] _readBuffer;
     protected static readonly StringBuilderPooledObjectPolicy _poolPolicy;
     protected static readonly ObjectPool<StringBuilder> _stringBuilderPool;
-    protected ChannelReader<ReadOnlyMemory<byte>> _reader;
-    protected ChannelWriter<ReadOnlyMemory<byte>> _writer;
 
     private const int _bufferSize = 60000;
   }

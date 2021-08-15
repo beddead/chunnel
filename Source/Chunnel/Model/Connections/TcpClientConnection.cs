@@ -19,7 +19,7 @@ namespace Chunnel.Model.Connections
     public override async Task RunAsync(ChannelReader<ReadOnlyMemory<byte>> reader, 
       ChannelWriter<ReadOnlyMemory<byte>> writer, CancellationToken cancellation)
     {
-      var endPoint = Setup(reader, writer);
+      var endPoint = Setup();
 
       cancellation.ThrowIfCancellationRequested();
 
@@ -33,7 +33,7 @@ namespace Chunnel.Model.Connections
             if (!_socket.Connected)
               await _socket.ConnectAsync(endPoint, cancellation).ConfigureAwait(false);
 
-            await RunTunnelLoop(_socket, cancellation);
+            await RunTunnelLoop(_socket, reader, writer, cancellation);
           }
           catch (TaskCanceledException)
           {
