@@ -40,17 +40,10 @@ namespace Chunnel.Model.Connections
         var hostEntry = Dns.GetHostEntry(_connectionPoint.Address);
         ipAddress = hostEntry.AddressList[0];
       }
-      var endPoint = new IPEndPoint(ipAddress, _connectionPoint.Port);
-
-      _socket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
-      {
-        NoDelay = true,
-        ReceiveBufferSize = _bufferSize,
-        SendBufferSize = _bufferSize
-      };
+      _endPoint = new IPEndPoint(ipAddress, _connectionPoint.Port);
 
       _readBuffer = new byte[_bufferSize];
-      return endPoint;
+      return _endPoint;
     }
 
     protected async Task RunTunnelLoop(Socket socket, ChannelReader<ReadOnlyMemory<byte>> reader,
@@ -65,7 +58,7 @@ namespace Chunnel.Model.Connections
         socket.RemoteEndPoint));
       var readLoop = ReadLoopAsync(socket, writer, cancellation);
       var writeLoop = WriteLoopAsync(socket, reader, cancellation);
-      await Task.WhenAll(readLoop, writeLoop);
+      await Task.WhenAny(readLoop, writeLoop);
     }
 
     protected async Task ReadLoopAsync(Socket socket, ChannelWriter<ReadOnlyMemory<byte>> writer, CancellationToken cancellation)
@@ -83,6 +76,11 @@ namespace Chunnel.Model.Connections
               BufferToString(buffer, readed)));
           }
           await WriteToChannelAsync(buffer, readed, writer, cancellation);
+        }
+        else
+        {
+          _logger.LogWarning("Разрыв соединения {Name}", Name);
+          break;
         }
       }
     }
@@ -109,12 +107,29 @@ namespace Chunnel.Model.Connections
       return writer.WriteAsync(outBuffer, cancellation);
     }
 
-    protected static Task CloseAsync(Socket socket)
+    protected static async Task CloseAsync(Socket socket)
     {
-      if (socket.Connected)
-        socket.Close();
+      try
+      {
+        socket.Shutdown(SocketShutdown.Both);
+      }
+      catch
+      {
+      }
 
-      return Task.CompletedTask;
+      try
+      {
+        await socket.DisconnectAsync(false);
+      }
+      catch
+      {
+      }
+
+      try
+      {
+        socket.Dispose();
+      }
+      catch { }
     }
 
     protected static string BufferToString(ReadOnlyMemory<byte> buffer, int readed)
@@ -137,11 +152,12 @@ namespace Chunnel.Model.Connections
 
     protected readonly TcpConnectionPoint _connectionPoint;
     protected readonly ILogger _logger;
+    private IPEndPoint _endPoint;
     protected Socket _socket;
     protected byte[] _readBuffer;
     protected static readonly StringBuilderPooledObjectPolicy _poolPolicy;
     protected static readonly ObjectPool<StringBuilder> _stringBuilderPool;
 
-    private const int _bufferSize = 60000;
+    protected const int _bufferSize = 60000;
   }
 }

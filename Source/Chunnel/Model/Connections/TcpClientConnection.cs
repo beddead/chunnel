@@ -30,9 +30,14 @@ namespace Chunnel.Model.Connections
           try
           {
             _logger.LogTrace(string.Format(LocStrings.Connecting, Name));
-            if (!_socket.Connected)
-              await _socket.ConnectAsync(endPoint, cancellation).ConfigureAwait(false);
+            _socket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp)
+            {
+              NoDelay = true,
+              ReceiveBufferSize = _bufferSize,
+              SendBufferSize = _bufferSize
+            };
 
+            await _socket.ConnectAsync(endPoint, cancellation).ConfigureAwait(false);
             await RunTunnelLoop(_socket, reader, writer, cancellation);
           }
           catch (TaskCanceledException)
@@ -57,6 +62,7 @@ namespace Chunnel.Model.Connections
             }
           }
 
+          await CloseAsync(_socket);
           await Task.Delay(TimeSpan.FromSeconds(5), cancellation);
         }
       }
