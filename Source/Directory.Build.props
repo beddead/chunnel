@@ -1,0 +1,38 @@
+<Project>
+  <PropertyGroup>
+    <Product>Chunnel</Product>
+    <Authors>Slava Antonov</Authors>
+    <Company>Slava Antonov</Company>
+    <Copyright>Copyright © 2023-$([System.DateTime]::Now.Year)</Copyright>
+    <RepositoryUrl>https://opo-tfs.zav.mir/DefaultCollection/_git/Hawk</RepositoryUrl>
+    <PackageProjectUrl>https://opo-tfs.zav.mir/DefaultCollection/Hawk</PackageProjectUrl>
+
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <WarningsNotAsErrors>NU1901,NU1902,NU1903,NU1904,NU5104</WarningsNotAsErrors>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- Для работы SourceLink -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SourceLinkAzureDevOpsServerGitHost Include="opo-tfs.zav.mir" />
+    <PackageReference Include="Microsoft.SourceLink.AzureDevOpsServer.Git" Version="8.0.0" PrivateAssets="All"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>$(AssemblyName).Tests</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+</Project>
