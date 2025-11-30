@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Source/">
     <Project Path="Chunnel/Chunnel.csproj" />
+    <Project Path="Chunnel.Core/Chunnel.Core.csproj" />
     <Project Path="Chunnel.Tests/Chunnel.Tests.csproj" />
   </Folder>
 </Solution>
