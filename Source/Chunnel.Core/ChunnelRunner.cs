@@ -1,11 +1,12 @@
 ﻿using System.Threading.Channels;
+using Chunnel.Core.Interfaces;
 using Chunnel.Core.Models;
 
 namespace Chunnel.Core;
 
 public class ChunnelRunner
 {
-  public ChunnelRunner(IConnectedEndpoint leftEndpoint, IConnectedEndpoint rightEndpoint)
+  public ChunnelRunner(IConnection leftEndpoint, IConnection rightEndpoint)
   {
     _leftEndpoint = leftEndpoint;
     _rightEndpoint = rightEndpoint;
@@ -169,6 +170,6 @@ public class ChunnelRunner
 
   private const int _bufferSize = 2048;
 
-  private readonly IConnectedEndpoint _leftEndpoint;
-  private readonly IConnectedEndpoint _rightEndpoint;
+  private readonly IConnection _leftEndpoint;
+  private readonly IConnection _rightEndpoint;
 }

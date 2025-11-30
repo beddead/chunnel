@@ -1,6 +1,6 @@
-namespace Chunnel.Core;
+namespace Chunnel.Core.Interfaces;
 
-public interface IConnectedEndpoint
+public interface IConnection
 {
   Task SendAsync(ReadOnlyMemory<byte> message, CancellationToken cancellation);
 
