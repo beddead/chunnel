@@ -5,4 +5,4 @@ namespace Chunnel.Core.Models;
 /// </summary>
 /// <param name="Address">IP-адрес</param>
 /// <param name="Port">TCP-порт</param>
-internal sealed record TcpConfig(string Address, int Port);
+public sealed record TcpConfig(string Address, int Port);
