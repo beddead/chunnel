@@ -12,10 +12,12 @@ internal sealed class Program
     SetUpCulture();
     using var services = BuildServices();
 
+    /*
     var logger = services.GetRequiredService<ILogger<Program>>();
     logger.LogInformation("\u001b[91mHello\u001b[0m");
     logger.LogWarning("\u001b[32mWorld\u001b[0m");
     logger.LogWarning("\u001b[92mTime: {Time}\u001b[0m", DateTime.Now);
+    */
 
     var command = new Command();
     return command.Execute(args);
