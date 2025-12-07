@@ -1,0 +1,24 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Core Launch (console)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "dotnet: build",
+      "program": "${workspaceFolder}/Source/Chunnel/bin/Debug/net9.0/chunnel.dll",
+      "args": ["left-type", "serial-port", "left-params", "/dev/tty0:9600:8n1", "right-type", "serial-port", "right-params", "COM1:9600:8n1"],
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopAtEntry": false,
+      "internalConsoleOptions": "openOnSessionStart",
+      "requireExactSource": false,
+      "logging": {
+          "moduleLoad": true
+      }
+  }
+  ]
+}

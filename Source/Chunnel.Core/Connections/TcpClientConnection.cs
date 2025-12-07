@@ -1,14 +1,16 @@
 using System.Net.Sockets;
 using Chunnel.Core.Interfaces;
 using Chunnel.Core.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Chunnel.Core.Connections;
 
 public sealed class TcpClientConnection : IConnection, IDisposable
 {
-  public TcpClientConnection(TcpConfig config)
+  public TcpClientConnection(TcpConfig config, ILogger logger)
   {
     _config = config;
+    _logger = logger;
   }
 
   public void Dispose()
@@ -151,4 +153,5 @@ public sealed class TcpClientConnection : IConnection, IDisposable
   private Socket? _socket;
   private volatile int _errorsCount;
   private readonly TcpConfig _config;
+  private readonly ILogger _logger;
 }

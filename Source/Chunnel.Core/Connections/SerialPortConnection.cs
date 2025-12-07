@@ -1,14 +1,16 @@
 using System.IO.Ports;
 using Chunnel.Core.Interfaces;
 using Chunnel.Core.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Chunnel.Core.Connections;
 
 public sealed class SerialPortConnection : IConnection, IDisposable
 {
-  public SerialPortConnection(SerialPortConfig config)
+  public SerialPortConnection(SerialPortConfig config, ILogger logger)
   {
     _config = config;
+    _logger = logger;
   }
 
   public void Dispose()
@@ -116,5 +118,6 @@ public sealed class SerialPortConnection : IConnection, IDisposable
   }
 
   private readonly SerialPortConfig _config;
+  private readonly ILogger _logger;
   private SerialPort? _serialPort;
 }

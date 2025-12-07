@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Runtime.InteropServices;
+using Chunnel.Core.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -19,8 +20,18 @@ internal sealed class Program
     logger.LogWarning("\u001b[92mTime: {Time}\u001b[0m", DateTime.Now);
     */
 
-    var command = new Command();
-    return command.Execute(args);
+    var command = new AppCommand();
+    return command.Execute(args, RunChunnel);
+  }
+
+  private static int RunChunnel(ConfigBase leftConfig, ConfigBase rightConfig)
+  {
+
+
+    //var leftConnection = CreateConnection(leftType, leftParams);
+    //var rightConnectio = CreateConnection(rightParams, leftParams);
+
+    throw new NotImplementedException();
   }
 
   private static ServiceProvider BuildServices()

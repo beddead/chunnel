@@ -10,4 +10,4 @@ namespace Chunnel.Core.Models;
 /// <param name="Parity">Контроль четности</param>
 /// <param name="DataBits">Количество информационных бит</param>
 /// <param name="StopBits">Количество стоп бит</param>
-public sealed record SerialPortConfig(string PortName, int BaudRate, Parity Parity, int DataBits, StopBits StopBits);
+public sealed record SerialPortConfig(string PortName, int BaudRate, Parity Parity, int DataBits, StopBits StopBits) : ConfigBase;

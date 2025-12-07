@@ -1,15 +1,10 @@
 namespace Chunnel.Core.Enums;
 
 /// <summary>
-/// Тип точки соединения
+/// Режим TCP-соединения
 /// </summary>
-public enum EndpointType : byte
+public enum TcpMode : byte
 {
-  /// <summary>
-  /// Последовательный порт
-  /// </summary>
-  SerialPort,
-
   /// <summary>
   /// TCP-клиент
   /// </summary>
